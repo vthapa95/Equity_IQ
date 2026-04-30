@@ -1,0 +1,7 @@
+streamlit
+google-genai
+pdfplumber
+pandas
+plotly
+python-dotenv
+yfinance
