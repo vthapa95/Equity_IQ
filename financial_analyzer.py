@@ -4,6 +4,7 @@ import json
 import yfinance as yf
 from pdf2image import convert_from_bytes
 import pytesseract
+from PIL import Image
 
 class FinancialAnalyzer:
     def __init__(self, api_key):
