@@ -2,7 +2,8 @@ import pdfplumber
 from google import genai
 import json
 import yfinance as yf
-
+from pdf2image import convert_from_bytes
+import pytesseract
 
 class FinancialAnalyzer:
     def __init__(self, api_key):
@@ -23,8 +24,31 @@ class FinancialAnalyzer:
             return None, f"Error extracting text: {str(e)}"
         if not text.strip():
             return None, "Could not extract any text from the PDF. It might be a scanned image."
+        if not text.strip():
+            try:
+                pdf_file.seek(0)
+                text = self.extract_text_with_ocr(pdf_file)
+                
+                if text.strip():
+                    return text, None
+            except Exception:
+                pass
+            return None, "Unable to extract text"
+
+        
         return text, None
 
+    def extract_text_with_ocr(self, pdf_file):
+        images = convert_from_bytes(pdf_file.read())
+        text = ""
+        
+        for image in images:
+            text += pytesseract.image_to_string(image)
+            
+        pdf_file.seek(0)
+        
+        return text
+    
     def analyze_financials(self, text):
         """Sends the text to Gemini to extract key financial metrics."""
         prompt = """You are an expert financial analyst. Your task is to carefully read through this financial statement and extract the key financial metrics for the MOST RECENT fiscal year.
