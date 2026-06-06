@@ -11,6 +11,8 @@ class FinancialAnalyzer:
         if not api_key:
             raise ValueError("API Key is required")
         self.client = genai.Client(api_key=api_key)
+        
+        self.used_ocr = False
 
     def extract_text_from_pdf(self, pdf_file):
         """Extracts text from a PDF file."""
@@ -27,7 +29,10 @@ class FinancialAnalyzer:
             return None, "Could not extract any text from the PDF. It might be a scanned image."
         if not text.strip():
             try:
+                self.used_ocr = True
+
                 pdf_file.seek(0)
+
                 text = self.extract_text_with_ocr(pdf_file)
                 
                 if text.strip():
