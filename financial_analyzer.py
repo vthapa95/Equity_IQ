@@ -13,6 +13,24 @@ class FinancialAnalyzer:
         self.client = genai.Client(api_key=api_key)
         
         self.used_ocr = False
+    def validate_metrics(self, metrics):
+    
+        required_fields = [
+            "Revenue",
+            "Net Income",
+            "EPS",
+            "Free Cash Flow"
+        ]
+    
+        for field in required_fields:
+    
+            if field not in metrics:
+                return False, f"Missing {field}"
+    
+            if metrics[field] is None:
+                return False, f"{field} is empty"
+    
+        return True, "Valid"        
 
     def extract_text_from_pdf(self, pdf_file):
         self.used_ocr = False
