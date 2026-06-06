@@ -15,6 +15,7 @@ class FinancialAnalyzer:
         self.used_ocr = False
 
     def extract_text_from_pdf(self, pdf_file):
+        self.used_ocr = False
         """Extracts text from a PDF file."""
         text = ""
         try:
@@ -37,9 +38,10 @@ class FinancialAnalyzer:
                 
                 if text.strip():
                     return text, None
-            except Exception:
+            except Exception as e:
+                print(f"OCR Error: {e}")
                 pass
-            return None, "Unable to extract text"
+            return None, "Unable to extract text from PDF even with OCR."
 
         
         return text, None
