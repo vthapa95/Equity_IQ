@@ -13,24 +13,6 @@ class FinancialAnalyzer:
         self.client = genai.Client(api_key=api_key)
         
         self.used_ocr = False
-    def validate_metrics(self, metrics):
-    
-        required_fields = [
-            "Revenue",
-            "Net Income",
-            "EPS",
-            "Free Cash Flow"
-        ]
-    
-        for field in required_fields:
-    
-            if field not in metrics:
-                return False, f"Missing {field}"
-    
-            if metrics[field] is None:
-                return False, f"{field} is empty"
-    
-        return True, "Valid"        
 
     def extract_text_from_pdf(self, pdf_file):
         self.used_ocr = False
@@ -74,7 +56,26 @@ class FinancialAnalyzer:
         pdf_file.seek(0)
         
         return text
+
+    def validate_metrics(self, metrics):
     
+        required_fields = [
+            "Revenue",
+            "Net Income",
+            "EPS",
+            "Free Cash Flow"
+        ]
+    
+        for field in required_fields:
+    
+            if field not in metrics:
+                return False, f"Missing {field}"
+    
+            if metrics[field] is None:
+                return False, f"{field} is empty"
+    
+        return True, "Valid"        
+        
     def analyze_financials(self, text):
         """Sends the text to Gemini to extract key financial metrics."""
         prompt = """You are an expert financial analyst. Your task is to carefully read through this financial statement and extract the key financial metrics for the MOST RECENT fiscal year.
