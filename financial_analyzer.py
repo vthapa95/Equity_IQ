@@ -188,6 +188,24 @@ DOCUMENT TEXT:
             dcf_value += terminal_value / ((1 + discount_rate) ** years)
             intrinsic_dcf = dcf_value / shares if shares else 0
 
+    
+    def get_recommendation(self, intrinsic_value, market_price):
+        """
+        Generate investment recommendation based on intrinsic value
+        compared to current market price.
+        """
+    
+        if intrinsic_value is None or market_price is None:
+            return "N/A"
+    
+        if intrinsic_value > market_price * 1.20:
+            return "BUY"
+    
+        elif intrinsic_value > market_price:
+            return "HOLD"
+    
+        else:
+            return "SELL"
             # 2. Graham Number
             book_value = assets - liabilities
             bvps = book_value / shares if shares else 0
