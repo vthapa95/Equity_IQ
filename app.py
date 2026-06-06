@@ -99,6 +99,32 @@ def display_results(metrics, valuation, analyzer):
         notes = metrics.get("Notes", "No additional notes.")
         create_info_card("AI Analyst Notes", notes, "📝")
 
+    # Trust Footer
+    st.markdown('<div class="section-head">📥 Export Results</div>', unsafe_allow_html=True)
+    
+    export_data = {
+    "Company": metrics.get("Company Name"),
+    "Fiscal Year": metrics.get("Fiscal Year"),
+    "Revenue": metrics.get("Revenue"),
+    "Net Income": metrics.get("Net Income"),
+    "EPS": metrics.get("EPS"),
+    "Free Cash Flow": metrics.get("Free Cash Flow"),
+    "DCF Value": valuation.get("DCF Value"),
+    "Graham Number": valuation.get("Graham Number"
+    }
+
+    export_df = pd.DataFrame([export_data])
+
+    csv = export_df.to_csv(index=False)
+
+    st.download_button(
+        label="📥 Download Analysis CSV",
+        data=csv,
+        file_name=f"{company}_analysis.csv",
+        mime="text/csv"
+    )
+
+    
     # News
     ticker = metrics.get("Ticker", "")
     if ticker:
