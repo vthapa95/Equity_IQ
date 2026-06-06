@@ -249,6 +249,12 @@ def main():
                 progress.progress(35)
                 status.info("🧠 AI is analyzing financials...")
                 metrics = analyzer.analyze_financials(text)
+                is_valid, message = analyzer.validate_metrics(metrics)
+                
+                if not is_valid:
+                    st.error(message)
+                    return
+                    
                 progress.progress(75)
                 if "error" in metrics:
                     st.error(f"Analysis Error: {metrics['error']}")
