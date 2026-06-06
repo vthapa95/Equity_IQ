@@ -101,7 +101,8 @@ def display_results(metrics, valuation, analyzer):
 
     # Trust Footer
     st.markdown('<div class="section-head">📥 Export Results</div>', unsafe_allow_html=True)
-    
+
+    # Export Results
     export_data = {
     "Company": metrics.get("Company Name"),
     "Fiscal Year": metrics.get("Fiscal Year"),
@@ -124,7 +125,6 @@ def display_results(metrics, valuation, analyzer):
         mime="text/csv"
     )
 
-    
     # News
     ticker = metrics.get("Ticker", "")
     if ticker:
