@@ -237,6 +237,9 @@ def main():
                 status.info("📄 Extracting text from PDF...")
                 progress.progress(15)
                 text, error = analyzer.extract_text_from_pdf(uploaded_file)
+                if analyzer.used_ocr:
+                    st.info("OCR mode activated for scanned document.")
+                
                 if error:
                     st.error(error)
                     progress.empty()
