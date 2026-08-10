@@ -111,7 +111,7 @@ def display_results(metrics, valuation, analyzer):
     "EPS": metrics.get("EPS"),
     "Free Cash Flow": metrics.get("Free Cash Flow"),
     "DCF Value": valuation.get("DCF Value"),
-    "Graham Number": valuation.get("Graham Number"
+    "Graham Number": valuation.get("Graham Number")
     }
 
     export_df = pd.DataFrame([export_data])
